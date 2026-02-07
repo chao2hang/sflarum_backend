@@ -120,6 +120,13 @@
                 <version>4.0.2</version>
                 <scope>compile</scope>
             </dependency>
+            <!-- Source: https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-annotation -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>3.5.16</version>
+                <scope>compile</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

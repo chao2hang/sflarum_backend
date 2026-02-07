@@ -1,0 +1,21 @@
+package cn.nopj.sflarum.infra.mapper;
+import cn.nopj.sflarum.infra.po.DiscussionPo;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import java.util.List;
+@Mapper
+public interface DiscussionMapper {
+    @Select("SELECT `id` AS id, `title` AS title, `comment_count` AS commentCount, `participant_count` AS participantCount, `post_number_index` AS postNumberIndex, `created_at` AS createdAt, `user_id` AS userId, `first_post_id` AS firstPostId, `last_posted_at` AS lastPostedAt, `last_posted_user_id` AS lastPostedUserId, `last_post_id` AS lastPostId, `last_post_number` AS lastPostNumber, `hidden_at` AS hiddenAt, `hidden_user_id` AS hiddenUserId, `slug` AS slug, `is_private` AS isPrivate, `is_approved` AS isApproved, `is_sticky` AS isSticky, `is_locked` AS isLocked, `view_count` AS viewCount, `best_answer_post_id` AS bestAnswerPostId, `best_answer_user_id` AS bestAnswerUserId, `best_answer_notified` AS bestAnswerNotified, `best_answer_set_at` AS bestAnswerSetAt, `votes` AS votes, `hotness` AS hotness, `is_stickiest` AS isStickiest, `is_tag_sticky` AS isTagSticky FROM `f_discussions` WHERE `id` = #{id}")
+    DiscussionPo findById(Long id);
+    @Select("SELECT `id` AS id, `title` AS title, `comment_count` AS commentCount, `participant_count` AS participantCount, `post_number_index` AS postNumberIndex, `created_at` AS createdAt, `user_id` AS userId, `first_post_id` AS firstPostId, `last_posted_at` AS lastPostedAt, `last_posted_user_id` AS lastPostedUserId, `last_post_id` AS lastPostId, `last_post_number` AS lastPostNumber, `hidden_at` AS hiddenAt, `hidden_user_id` AS hiddenUserId, `slug` AS slug, `is_private` AS isPrivate, `is_approved` AS isApproved, `is_sticky` AS isSticky, `is_locked` AS isLocked, `view_count` AS viewCount, `best_answer_post_id` AS bestAnswerPostId, `best_answer_user_id` AS bestAnswerUserId, `best_answer_notified` AS bestAnswerNotified, `best_answer_set_at` AS bestAnswerSetAt, `votes` AS votes, `hotness` AS hotness, `is_stickiest` AS isStickiest, `is_tag_sticky` AS isTagSticky FROM `f_discussions`")
+    List<DiscussionPo> findAll();
+    @Insert("INSERT INTO `f_discussions` (`id`, `title`, `comment_count`, `participant_count`, `post_number_index`, `created_at`, `user_id`, `first_post_id`, `last_posted_at`, `last_posted_user_id`, `last_post_id`, `last_post_number`, `hidden_at`, `hidden_user_id`, `slug`, `is_private`, `is_approved`, `is_sticky`, `is_locked`, `view_count`, `best_answer_post_id`, `best_answer_user_id`, `best_answer_notified`, `best_answer_set_at`, `votes`, `hotness`, `is_stickiest`, `is_tag_sticky`) VALUES (#{id}, #{title}, #{commentCount}, #{participantCount}, #{postNumberIndex}, #{createdAt}, #{userId}, #{firstPostId}, #{lastPostedAt}, #{lastPostedUserId}, #{lastPostId}, #{lastPostNumber}, #{hiddenAt}, #{hiddenUserId}, #{slug}, #{isPrivate}, #{isApproved}, #{isSticky}, #{isLocked}, #{viewCount}, #{bestAnswerPostId}, #{bestAnswerUserId}, #{bestAnswerNotified}, #{bestAnswerSetAt}, #{votes}, #{hotness}, #{isStickiest}, #{isTagSticky})")
+    int insert(DiscussionPo po);
+    @Update("UPDATE `f_discussions` SET `id` = #{id}, `title` = #{title}, `comment_count` = #{commentCount}, `participant_count` = #{participantCount}, `post_number_index` = #{postNumberIndex}, `created_at` = #{createdAt}, `user_id` = #{userId}, `first_post_id` = #{firstPostId}, `last_posted_at` = #{lastPostedAt}, `last_posted_user_id` = #{lastPostedUserId}, `last_post_id` = #{lastPostId}, `last_post_number` = #{lastPostNumber}, `hidden_at` = #{hiddenAt}, `hidden_user_id` = #{hiddenUserId}, `slug` = #{slug}, `is_private` = #{isPrivate}, `is_approved` = #{isApproved}, `is_sticky` = #{isSticky}, `is_locked` = #{isLocked}, `view_count` = #{viewCount}, `best_answer_post_id` = #{bestAnswerPostId}, `best_answer_user_id` = #{bestAnswerUserId}, `best_answer_notified` = #{bestAnswerNotified}, `best_answer_set_at` = #{bestAnswerSetAt}, `votes` = #{votes}, `hotness` = #{hotness}, `is_stickiest` = #{isStickiest}, `is_tag_sticky` = #{isTagSticky} WHERE `id` = #{id}")
+    int update(DiscussionPo po);
+    @Delete("DELETE FROM `f_discussions` WHERE `id` = #{id}")
+    int deleteById(Long id);
+}

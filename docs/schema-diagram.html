@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Schema Diagram</title>
+    <style>
+        :root{
+          --bg:#f6f7fb;
+          --panel:#ffffff;
+          --panel-2:#f1f3f6;
+          --text:#1f2328;
+          --muted:#6b7280;
+          --border:#e2e5ec;
+          --accent:#2563eb;
+          --accent-2:#10b981;
+          --code:#0f172a;
+          --shadow:0 10px 30px rgba(16,24,40,.08);
+        }
+        @media (prefers-color-scheme: dark){
+          :root{
+            --bg:#0b1220;
+            --panel:#0f172a;
+            --panel-2:#111827;
+            --text:#e5e7eb;
+            --muted:#94a3b8;
+            --border:#1f2937;
+            --accent:#60a5fa;
+            --accent-2:#34d399;
+            --code:#e2e8f0;
+            --shadow:0 10px 30px rgba(0,0,0,.35);
+          }
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        h1 {
+            text-align: center;
+            margin: 10px 0;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+        #mermaid-container {
+            flex-grow: 1;
+        }
+        .svg-pan-zoom-control-background {
+            fill: var(--panel);
+            stroke: var(--border);
+        }
+        .svg-pan-zoom-control-element {
+            fill: var(--text);
+        }
+        .svg-pan-zoom-control-element:hover {
+            fill: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <h1>Database Schema Diagram (Drag to pan, scroll/pinch to zoom)</h1>
+    <div id="mermaid-container">
+        <pre class="mermaid" style="display: none;">
+erDiagram
+    f_access_tokens {
+        int_unsigned id PK
+        varchar_40_ token
+        int_unsigned user_id FK
+        datetime last_activity_at
+        datetime created_at
+        varchar_100_ type
+        varchar_150_ title
+        varchar_45_ last_ip_address
+        varchar_255_ last_user_agent
+    }
+    f_api_keys {
+        varchar_100_ key
+        int_unsigned id PK
+        varchar_255_ allowed_ips
+        varchar_255_ scopes
+        int_unsigned user_id FK
+        datetime created_at
+        datetime last_activity_at
+    }
+    f_badge_category {
+        int_unsigned id PK
+        varchar_46_ name
+        int order
+        text description
+        tinyint_1_ is_enabled
+        datetime created_at
+        tinyint_1_ is_table
+    }
+    f_badge_user {
+        int_unsigned id PK
+        int_unsigned user_id FK
+        int_unsigned badge_id FK
+        text description
+        tinyint_1_ is_primary
+        datetime assigned_at
+        tinyint_1_ in_user_card
+    }
+    f_badges {
+        int_unsigned id PK
+        varchar_46_ name
+        varchar_100_ icon
+        int order
+        text image
+        text description
+        tinyint_1_ is_visible
+        datetime created_at
+        int_unsigned badge_category_id FK
+        int points
+        varchar_50_ background_color
+        varchar_50_ icon_color
+        varchar_50_ label_color
+    }
+    f_criteria {
+        int_unsigned id PK
+        int_unsigned last_edited_by_id FK
+        varchar_200_ name
+        varchar_50_ icon
+        text description
+        text metrics
+        text requirements
+        text actions
+    }
+    f_criterion_user {
+        int_unsigned criterion_id PK,FK
+        int_unsigned user_id PK,FK
+    }
+    f_discussion_sticky_tag {
+        int_unsigned discussion_id PK,FK
+        int_unsigned tag_id PK,FK
+    }
+    f_discussion_tag {
+        int_unsigned discussion_id PK,FK
+        int_unsigned tag_id PK,FK
+        timestamp created_at
+    }
+    f_discussion_user {
+        int_unsigned user_id PK,FK
+        int_unsigned discussion_id PK,FK
+        datetime last_read_at
+        int_unsigned last_read_post_number
+        enum__follow___ignore__ subscription
+    }
+    f_discussion_views {
+        int_unsigned id PK
+        int_unsigned user_id FK
+        int_unsigned discussion_id FK
+        varchar_16_ ip
+        datetime visited_at
+    }
+    f_discussions {
+        int_unsigned id PK
+        varchar_200_ title
+        int comment_count
+        int_unsigned participant_count
+        int_unsigned post_number_index
+        datetime created_at
+        int_unsigned user_id FK
+        int_unsigned first_post_id FK
+        datetime last_posted_at
+        int_unsigned last_posted_user_id FK
+        int_unsigned last_post_id FK
+        int_unsigned last_post_number
+        datetime hidden_at
+        int_unsigned hidden_user_id FK
+        varchar_255_ slug
+        tinyint_1_ is_private
+        tinyint_1_ is_approved
+        tinyint_1_ is_sticky
+        tinyint_1_ is_locked
+        int view_count
+        int_unsigned best_answer_post_id FK
+        int_unsigned best_answer_user_id FK
+        tinyint_1_ best_answer_notified
+        datetime best_answer_set_at
+        int votes
+        double_10_4_ hotness
+        tinyint_1_ is_stickiest
+        tinyint_1_ is_tag_sticky
+    }
+    f_drafts {
+        int_unsigned id PK
+        int_unsigned user_id FK
+        varchar_255_ title
+        mediumtext content
+        varchar_255_ relationships
+        datetime updated_at
+        datetime scheduled_for
+        mediumtext scheduled_validation_error
+        varchar_45_ ip_address
+        varchar_255_ extra
+    }
+    f_email_tokens {
+        varchar_100_ token PK
+        varchar_254_ email
+        int_unsigned user_id FK
+        datetime created_at
+    }
+    f_extension_manager_tasks {
+        int_unsigned id PK
+        varchar_50_ status
+        varchar_50_ operation
+        varchar_50_ command
+        varchar_100_ package
+        mediumtext output
+        varchar_255_ guessed_cause
+        timestamp created_at
+        timestamp started_at
+        timestamp finished_at
+        mediumint_8__unsigned peak_memory_used
+    }
+    f_flags {
+        int_unsigned id PK
+        int_unsigned post_id FK
+        varchar_255_ type
+        int_unsigned user_id FK
+        varchar_255_ reason
+        text reason_detail
+        datetime created_at
+    }
+    f_fof_merge_discussions_redirections {
+        int_unsigned id PK
+        bigint_20__unsigned request_discussion_id
+        bigint_20__unsigned to_discussion_id
+        int_unsigned http_code
+        timestamp created_at
+    }
+    f_fof_upload_downloads {
+        bigint_20__unsigned id PK
+        int_unsigned file_id FK
+        int_unsigned discussion_id FK
+        int_unsigned post_id FK
+        int_unsigned actor_id FK
+        timestamp downloaded_at
+    }
+    f_fof_upload_file_posts {
+        bigint_20__unsigned id PK
+        int_unsigned file_id FK
+        int_unsigned post_id FK
+    }
+    f_fof_upload_files {
+        int_unsigned id PK
+        int_unsigned actor_id FK
+        varchar_255_ base_name
+        varchar_255_ path
+        varchar_255_ url
+        varchar_255_ type
+        int size
+        varchar_255_ upload_method
+        datetime created_at
+        varchar_255_ remote_id
+        varchar_255_ uuid
+        varchar_255_ tag
+        tinyint_1_ hidden
+        tinyint_1_ shared
+    }
+    f_group_permission {
+        int_unsigned group_id PK,FK
+        varchar_100_ permission PK
+        timestamp created_at
+    }
+    f_group_user {
+        int_unsigned user_id PK,FK
+        int_unsigned group_id PK,FK
+        timestamp created_at
+    }
+    f_groups {
+        int_unsigned id PK
+        varchar_100_ name_singular
+        varchar_100_ name_plural
+        varchar_20_ color
+        varchar_100_ icon
+        tinyint_1_ is_hidden
+        timestamp created_at
+        timestamp updated_at
+    }
+    f_jetbrains_keys {
+        int id PK
+        varchar_255_ name
+        varchar_50_ keyword
+        text software_key
+        timestamp created_at
+        timestamp updated_at
+    }
+    f_jetbrains_keys_copy1 {
+        int id PK
+        varchar_255_ name
+        varchar_50_ keyword
+        text software_key
+        timestamp created_at
+        timestamp updated_at
+    }
+    f_login_providers {
+        int_unsigned id PK
+        int_unsigned user_id FK
+        varchar_100_ provider
+        varchar_100_ identifier
+        datetime created_at
+        datetime last_login_at
+    }
+    f_migrations {
+        int_unsigned id PK
+        varchar_255_ migration
+        varchar_255_ extension
+    }
+    f_notifications {
+        int_unsigned id PK
+        int_unsigned user_id FK
+        int_unsigned from_user_id FK
+        varchar_100_ type
+        int_unsigned subject_id
+        blob data
+        datetime created_at
+        tinyint_1_ is_deleted
+        datetime read_at
+    }
+    f_password_tokens {
+        varchar_100_ token PK
+        int_unsigned user_id FK
+        datetime created_at
+    }
+    f_poll_options {
+        int_unsigned id PK
+        varchar_255_ answer
+        int_unsigned poll_id FK
+        timestamp created_at
+        timestamp updated_at
+        int_unsigned vote_count
+        varchar_255_ image_url
+    }
+    f_poll_votes {
+        int_unsigned id PK
+        int_unsigned poll_id FK
+        int_unsigned option_id FK
+        int_unsigned user_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    f_polls {
+        int_unsigned id PK
+        varchar_255_ question
+        text subtitle
+        text image
+        varchar_255_ image_alt
+        int_unsigned post_id FK
+        int_unsigned user_id FK
+        tinyint_1_ public_poll
+        timestamp end_date
+        timestamp created_at
+        timestamp updated_at
+        int_unsigned vote_count
+        tinyint_1_ allow_multiple_votes
+        int_unsigned max_votes
+        longtext settings
+    }
+    f_post_likes {
+        int_unsigned post_id PK,FK
+        int_unsigned user_id PK,FK
+        timestamp created_at
+    }
+    f_post_mentions_group {
+        int_unsigned post_id PK,FK
+        int_unsigned mentions_group_id PK,FK
+        datetime created_at
+    }
+    f_post_mentions_post {
+        int_unsigned post_id PK,FK
+        int_unsigned mentions_post_id PK,FK
+        timestamp created_at
+    }
+    f_post_mentions_tag {
+        int_unsigned post_id PK,FK
+        int_unsigned mentions_tag_id PK,FK
+        datetime created_at
+    }
+    f_post_mentions_user {
+        int_unsigned post_id PK,FK
+        int_unsigned mentions_user_id PK,FK
+        timestamp created_at
+    }
+    f_post_user {
+        int_unsigned post_id PK,FK
+        int_unsigned user_id PK,FK
+    }
+    f_post_votes {
+        int_unsigned id PK
+        int_unsigned post_id FK
+        int_unsigned user_id FK
+        int value
+        timestamp created_at
+        timestamp updated_at
+    }
+    f_posts {
+        int_unsigned id PK
+        int_unsigned discussion_id FK
+        int_unsigned number
+        datetime created_at
+        int_unsigned user_id FK
+        varchar_100_ type
+        mediumtext content
+        datetime edited_at
+        int_unsigned edited_user_id FK
+        datetime hidden_at
+        int_unsigned hidden_user_id FK
+        varchar_45_ ip_address
+        tinyint_1_ is_private
+        tinyint_1_ is_approved
+    }
+    f_purchase_history {
+        int_unsigned id PK
+        int_unsigned user_id FK
+        int_unsigned item_id FK
+        varchar_255_ provider
+        timestamp expire_at
+        varchar_255_ data
+        int rest_cnt
+        timestamp created_at
+        timestamp updated_at
+    }
+    f_rank_users {
+        int_unsigned rank_id PK
+        int_unsigned user_id PK
+    }
+    f_ranks {
+        int_unsigned id PK
+        int_unsigned points
+        varchar_255_ name
+        varchar_255_ color
+    }
+    f_registration_tokens {
+        varchar_100_ token PK
+        text payload
+        datetime created_at
+        varchar_255_ provider
+        varchar_255_ identifier
+        text user_attributes
+    }
+    f_settings {
+        varchar_100_ key PK
+        text value
+    }
+    f_store_item {
+        int_unsigned id PK
+        timestamp created_at
+        timestamp updated_at
+        varchar_255_ name
+        varchar_255_ desc
+        varchar_255_ provider
+        double price
+        varchar_255_ provider_data
+        tinyint_1_ is_enabled
+        tinyint_1_ is_valid
+        int rest_cnt
+        int use_cnt
+        int expire_time
+    }
+    f_tag_user {
+        int_unsigned user_id PK,FK
+        int_unsigned tag_id PK,FK
+        datetime marked_as_read_at
+        tinyint_1_ is_hidden
+        enum__follow___lurk___ignore___hide__ subscription
+        timestamp created_at
+        timestamp updated_at
+    }
+    f_tags {
+        int_unsigned id PK
+        varchar_100_ name
+        varchar_100_ slug
+        text description
+        varchar_50_ color
+        varchar_255_ image_url
+        varchar_100_ background_path
+        varchar_100_ background_mode
+        int position
+        int_unsigned parent_id FK
+        varchar_50_ default_sort
+        tinyint_1_ is_restricted
+        tinyint_1_ is_hidden
+        int_unsigned discussion_count
+        datetime last_posted_at
+        int_unsigned last_posted_discussion_id FK
+        int_unsigned last_posted_user_id FK
+        varchar_100_ icon
+        timestamp created_at
+        timestamp updated_at
+        int_unsigned post_count
+        tinyint_1_ is_qna
+        tinyint_1_ qna_reminders
+    }
+    f_users {
+        int_unsigned id PK
+        varchar_100_ username
+        varchar_255_ nickname
+        varchar_254_ email
+        tinyint_1_ is_email_confirmed
+        varchar_100_ password
+        varchar_100_ avatar_url
+        blob preferences
+        datetime joined_at
+        datetime last_seen_at
+        datetime marked_all_as_read_at
+        datetime read_notifications_at
+        int_unsigned discussion_count
+        int_unsigned comment_count
+        datetime read_flags_at
+        datetime suspended_until
+        text suspend_reason
+        text suspend_message
+        double money
+        int_unsigned best_answer_count
+        int votes
+        varchar_255_ rank
+        datetime last_vote_time
+        text bio
+        varchar_150_ cover
+    }
+    f_access_tokens }|--|| f_users : "references"
+    f_api_keys }|--|| f_users : "references"
+    f_badge_user }|--|| f_badge_category : "references"
+    f_badge_user }|--|| f_users : "references"
+    f_badges }|--|| f_badge_category : "references"
+    f_criteria }|--|| f_users : "references"
+    f_criterion_user }|--|| f_users : "references"
+    f_criterion_user }|--|| f_criteria : "references"
+    f_discussion_sticky_tag }|--|| f_discussions : "references"
+    f_discussion_sticky_tag }|--|| f_tags : "references"
+    f_discussion_tag }|--|| f_discussions : "references"
+    f_discussion_tag }|--|| f_tags : "references"
+    f_discussion_user }|--|| f_users : "references"
+    f_discussion_user }|--|| f_discussions : "references"
+    f_discussion_views }|--|| f_users : "references"
+    f_discussion_views }|--|| f_discussions : "references"
+    f_discussions }|--|| f_users : "references"
+    f_discussions }|--|| f_posts : "references"
+    f_drafts }|--|| f_users : "references"
+    f_email_tokens }|--|| f_users : "references"
+    f_flags }|--|| f_posts : "references"
+    f_flags }|--|| f_users : "references"
+    f_fof_upload_downloads }|--|| f_fof_upload_files : "references"
+    f_fof_upload_downloads }|--|| f_discussions : "references"
+    f_fof_upload_downloads }|--|| f_posts : "references"
+    f_fof_upload_downloads }|--|| f_users : "references"
+    f_fof_upload_file_posts }|--|| f_fof_upload_files : "references"
+    f_fof_upload_file_posts }|--|| f_posts : "references"
+    f_group_permission }|--|| f_groups : "references"
+    f_group_user }|--|| f_users : "references"
+    f_group_user }|--|| f_groups : "references"
+    f_login_providers }|--|| f_users : "references"
+    f_notifications }|--|| f_users : "references"
+    f_password_tokens }|--|| f_users : "references"
+    f_poll_options }|--|| f_polls : "references"
+    f_poll_votes }|--|| f_polls : "references"
+    f_poll_votes }|--|| f_poll_options : "references"
+    f_poll_votes }|--|| f_users : "references"
+    f_polls }|--|| f_posts : "references"
+    f_polls }|--|| f_users : "references"
+    f_post_likes }|--|| f_posts : "references"
+    f_post_likes }|--|| f_users : "references"
+    f_post_mentions_group }|--|| f_posts : "references"
+    f_post_mentions_group }|--|| f_groups : "references"
+    f_post_mentions_post }|--|| f_posts : "references"
+    f_post_mentions_tag }|--|| f_posts : "references"
+    f_post_mentions_tag }|--|| f_tags : "references"
+    f_post_mentions_user }|--|| f_posts : "references"
+    f_post_mentions_user }|--|| f_users : "references"
+    f_post_user }|--|| f_posts : "references"
+    f_post_user }|--|| f_users : "references"
+    f_post_votes }|--|| f_posts : "references"
+    f_post_votes }|--|| f_users : "references"
+    f_posts }|--|| f_discussions : "references"
+    f_posts }|--|| f_users : "references"
+    f_purchase_history }|--|| f_users : "references"
+    f_purchase_history }|--|| f_store_item : "references"
+    f_tag_user }|--|| f_users : "references"
+    f_tag_user }|--|| f_tags : "references"
+    f_tags }|--|| f_discussions : "references"
+    f_tags }|--|| f_users : "references"
+        </pre>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+        let panZoom;
+
+        async function renderDiagram() {
+            if (panZoom) {
+                panZoom.destroy();
+            }
+
+            const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: isDarkMode ? 'dark' : 'default'
+            });
+
+            const mermaidSource = document.querySelector('pre.mermaid').innerText;
+            const container = document.getElementById('mermaid-container');
+            
+            try {
+                const graphId = 'graph-' + new Date().getTime();
+                const { svg } = await mermaid.render(graphId, mermaidSource);
+                container.innerHTML = svg;
+                
+                const svgElement = container.querySelector('svg');
+
+                svgElement.style.width = '100%';
+                svgElement.style.height = '100%';
+
+                panZoom = svgPanZoom(svgElement, {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,
+                    minZoom: 0.1,
+                    preventMouseEventsDefault: true
+                });
+
+                window.addEventListener('resize', () => {
+                    if (panZoom) {
+                        panZoom.resize();
+                        panZoom.fit();
+                        panZoom.center();
+                    }
+                });
+
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = `Error rendering diagram: ${e.message}`;
+            }
+        }
+
+        renderDiagram();
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderDiagram);
+
+    </script>
+</body>
+</html>
