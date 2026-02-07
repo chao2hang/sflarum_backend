@@ -208,7 +208,6 @@ erDiagram
         int_unsigned user_id FK
         datetime created_at
     }
-    f_extension_manager_tasks {
         int_unsigned id PK
         varchar_50_ status
         varchar_50_ operation
@@ -230,14 +229,12 @@ erDiagram
         text reason_detail
         datetime created_at
     }
-    f_fof_merge_discussions_redirections {
         int_unsigned id PK
         bigint_20__unsigned request_discussion_id
         bigint_20__unsigned to_discussion_id
         int_unsigned http_code
         timestamp created_at
     }
-    f_fof_upload_downloads {
         bigint_20__unsigned id PK
         int_unsigned file_id FK
         int_unsigned discussion_id FK
@@ -245,12 +242,10 @@ erDiagram
         int_unsigned actor_id FK
         timestamp downloaded_at
     }
-    f_fof_upload_file_posts {
         bigint_20__unsigned id PK
         int_unsigned file_id FK
         int_unsigned post_id FK
     }
-    f_fof_upload_files {
         int_unsigned id PK
         int_unsigned actor_id FK
         varchar_255_ base_name
@@ -294,7 +289,6 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    f_jetbrains_keys_copy1 {
         int id PK
         varchar_255_ name
         varchar_50_ keyword
@@ -418,7 +412,6 @@ erDiagram
         tinyint_1_ is_private
         tinyint_1_ is_approved
     }
-    f_purchase_history {
         int_unsigned id PK
         int_unsigned user_id FK
         int_unsigned item_id FK
@@ -451,7 +444,6 @@ erDiagram
         varchar_100_ key PK
         text value
     }
-    f_store_item {
         int_unsigned id PK
         timestamp created_at
         timestamp updated_at
@@ -549,12 +541,6 @@ erDiagram
     f_email_tokens }|--|| f_users : "references"
     f_flags }|--|| f_posts : "references"
     f_flags }|--|| f_users : "references"
-    f_fof_upload_downloads }|--|| f_fof_upload_files : "references"
-    f_fof_upload_downloads }|--|| f_discussions : "references"
-    f_fof_upload_downloads }|--|| f_posts : "references"
-    f_fof_upload_downloads }|--|| f_users : "references"
-    f_fof_upload_file_posts }|--|| f_fof_upload_files : "references"
-    f_fof_upload_file_posts }|--|| f_posts : "references"
     f_group_permission }|--|| f_groups : "references"
     f_group_user }|--|| f_users : "references"
     f_group_user }|--|| f_groups : "references"
@@ -582,8 +568,6 @@ erDiagram
     f_post_votes }|--|| f_users : "references"
     f_posts }|--|| f_discussions : "references"
     f_posts }|--|| f_users : "references"
-    f_purchase_history }|--|| f_users : "references"
-    f_purchase_history }|--|| f_store_item : "references"
     f_tag_user }|--|| f_users : "references"
     f_tag_user }|--|| f_tags : "references"
     f_tags }|--|| f_discussions : "references"

@@ -23,6 +23,16 @@ public class AccessTokenRepositoryImpl implements AccessTokenRepository {
         return entity;
     }
     @Override
+    public AccessToken findByToken(String token) {
+        AccessTokenPo po = mapper.findByToken(token);
+        if (po == null) {
+            return null;
+        }
+        AccessToken entity = new AccessToken();
+        BeanUtils.copyProperties(po, entity);
+        return entity;
+    }
+    @Override
     public List<AccessToken> findAll() {
         List<AccessTokenPo> list = mapper.findAll();
         List<AccessToken> result = new ArrayList<>();
@@ -47,6 +57,10 @@ public class AccessTokenRepositoryImpl implements AccessTokenRepository {
         AccessTokenPo po = new AccessTokenPo();
         BeanUtils.copyProperties(entity, po);
         return mapper.update(po) > 0;
+    }
+    @Override
+    public boolean updateLastActivity(String token, java.time.LocalDateTime lastActivityAt, String lastIpAddress, String lastUserAgent) {
+        return mapper.updateLastActivity(token, lastActivityAt, lastIpAddress, lastUserAgent) > 0;
     }
     @Override
     public boolean delete(Long id) {

@@ -23,6 +23,16 @@ public class ApiKeyRepositoryImpl implements ApiKeyRepository {
         return entity;
     }
     @Override
+    public ApiKey findByKey(String key) {
+        ApiKeyPo po = mapper.findByKey(key);
+        if (po == null) {
+            return null;
+        }
+        ApiKey entity = new ApiKey();
+        BeanUtils.copyProperties(po, entity);
+        return entity;
+    }
+    @Override
     public List<ApiKey> findAll() {
         List<ApiKeyPo> list = mapper.findAll();
         List<ApiKey> result = new ArrayList<>();
@@ -47,6 +57,10 @@ public class ApiKeyRepositoryImpl implements ApiKeyRepository {
         ApiKeyPo po = new ApiKeyPo();
         BeanUtils.copyProperties(entity, po);
         return mapper.update(po) > 0;
+    }
+    @Override
+    public boolean updateLastActivity(String key, java.time.LocalDateTime lastActivityAt) {
+        return mapper.updateLastActivity(key, lastActivityAt) > 0;
     }
     @Override
     public boolean delete(Long id) {
